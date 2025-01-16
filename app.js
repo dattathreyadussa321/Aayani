@@ -8,37 +8,42 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 main()
-.then(()=>{console.log("mongo connected")})
-.catch(err => console.log(err));
+  .then(() => {
+    console.log("MongoDB connected");
+  })
+  .catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/aayani')
-  } 
+  // Correct MongoDB Atlas connection string (ensure this is correct)
+  await mongoose.connect('mongodb+srv://aayani:aayani@cluster0.tuyjm.mongodb.net/');
+}
 
 const userSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    number: Number,
-    msg: String,
-})  
-
-const userDetails = mongoose.model("userDetails",userSchema);
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  });
-
-
-app.post("/fdetails",(req,res)=>{
-  const details = new userDetails(req.body);
-  console.log(req.body);
-  details.save();
-  
+  name: String,
+  email: String,
+  number: Number,
+  msg: String,
 });
 
+const userDetails = mongoose.model("userDetails", userSchema);
 
-app.listen(port,()=>{
-    console.log(`app is listening at port ${port}`);
-})
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-  
+app.post("/fdetails", (req, res) => {
+  const details = new userDetails(req.body);
+  console.log(req.body);
+  details.save()
+    .then(() => {
+      res.send("Data saved successfully");
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send("Error saving data");
+    });
+});
+
+app.listen(port, () => {
+  console.log(`App is listening at port ${port}`);
+});
