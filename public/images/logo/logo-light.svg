@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 80" width="280" height="80">
+  <rect width="280" height="80" fill="transparent"/>
+  <g transform="translate(20, 20)">
+    <path d="M0 40 L20 0 L40 40 M8 26 L32 26" fill="none" stroke="#EDF7F8" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+  </g>
+  <g transform="translate(80, 0)">
+    <text x="0" y="34" font-family="Georgia, 'Times New Roman', serif" font-size="22" letter-spacing="4" fill="#EDF7F8">AAYANI</text>
+    <text x="0" y="56" font-family="Helvetica, Arial, sans-serif" font-size="9" letter-spacing="3" fill="rgba(237,247,248,0.7)">ARCHITECTS &#xB7; INTERIORS</text>
+  </g>
+</svg>

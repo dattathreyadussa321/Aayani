@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Update this once a domain is configured
+# Sitemap: https://www.aayanidesigns.com/sitemap.xml

@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ======================================================================
+   AAYANI — DESIGN TOKENS & GLOBAL STYLES
+   Cool teal boutique studio aesthetic. Editorial typography. Quiet confidence.
+   ====================================================================== */
+
+:root {
+  --color-ivory: #edf7f8;
+  --color-soft-white: #f5fbfc;
+  --color-charcoal: #17202a;
+  --color-warm-grey: #4a6670;
+  --color-terracotta: #2db4bd;
+  --color-olive: #226773;
+  --color-subtle-border: rgba(23, 32, 42, 0.12);
+
+  --max-content: 1280px;
+  --section-y: clamp(4rem, 9vw, 8rem);
+
+  /* Subtle paper grain — barely visible texture for warmth */
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.12  0 0 0 0 0.11  0 0 0 0 0.10  0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  background: var(--color-ivory);
+  color: var(--color-charcoal);
+  font-family: var(--font-manrope), system-ui, sans-serif;
+}
+
+body {
+  position: relative;
+  font-feature-settings: "ss01" on, "cv11" on;
+  overflow-x: hidden;
+}
+
+/* paper grain overlay — adds tactility without noise */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+
+/* Editorial heading defaults */
+h1, h2, h3, h4 {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--color-charcoal);
+}
+
+::selection {
+  background: var(--color-terracotta);
+  color: var(--color-soft-white);
+}
+
+/* Focus visible for keyboard nav */
+:focus-visible {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Custom scrollbar (subtle) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(23, 32, 42, 0.18);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(23, 32, 42, 0.32);
+}
+
+/* ======================================================================
+   COMPONENT-LEVEL UTILITIES
+   ====================================================================== */
+@layer components {
+  .container-x {
+    @apply mx-auto w-full px-5 sm:px-8 lg:px-12;
+    max-width: var(--max-content);
+  }
+
+  .section-y {
+    padding-top: var(--section-y);
+    padding-bottom: var(--section-y);
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-warm-grey font-medium;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+    display: inline-block;
+    opacity: 0.6;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-charcoal text-ivory px-6 py-3.5 text-sm tracking-widish font-medium transition-all duration-300 ease-soft-out hover:bg-terracotta;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 border border-charcoal/80 text-charcoal px-6 py-3.5 text-sm tracking-widish font-medium transition-all duration-300 ease-soft-out hover:bg-charcoal hover:text-ivory;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 text-sm tracking-widish text-charcoal font-medium transition-colors hover:text-terracotta;
+  }
+
+  .btn-ghost::after {
+    content: "→";
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .btn-ghost:hover::after {
+    transform: translateX(6px);
+  }
+
+  /* Image-reveal: subtle clip-path reveal as element scrolls in */
+  .reveal-img {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal-img.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s ease-out, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Material chip — small pill used to label finishes/materials */
+  .material-chip {
+    @apply inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.16em] text-warm-grey px-3 py-1.5 border border-subtle-border rounded-full bg-soft-white;
+  }
+
+  /* Editorial divider */
+  .divider-x {
+    height: 1px;
+    background: var(--color-subtle-border);
+  }
+
+  /* Number column for HowItWorks etc. */
+  .step-num {
+    font-family: var(--font-fraunces), serif;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ======================================================================
+   PLACEHOLDER PATTERNS — used until real images replace them
+   ====================================================================== */
+.ph-warm {
+  background:
+    radial-gradient(at 20% 20%, rgba(45, 180, 189, 0.15), transparent 55%),
+    radial-gradient(at 80% 70%, rgba(34, 103, 115, 0.12), transparent 60%),
+    linear-gradient(135deg, #d4eff1 0%, #b0dce0 100%);
+}
+
+.ph-cool {
+  background:
+    radial-gradient(at 30% 30%, rgba(34, 103, 115, 0.22), transparent 55%),
+    linear-gradient(135deg, #c5e6e9 0%, #92c8cd 100%);
+}
+
+.ph-deep {
+  background:
+    radial-gradient(at 60% 40%, rgba(45, 180, 189, 0.28), transparent 55%),
+    linear-gradient(135deg, #1d3844 0%, #17202a 100%);
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
